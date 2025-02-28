@@ -5,13 +5,9 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="getMenuBackground"
-        :text-color="getMenuTextColor"
         :unique-opened="true"
-        :active-text-color="theme"
         :collapse-transition="false"
         mode="vertical"
-        :class="sideTheme"
       >
         <sidebar-item
           v-for="(route, index) in sidebarRouters"
@@ -25,17 +21,17 @@
 </template>
 
 <script setup>
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/assets/styles/variables.module.scss'
-import useAppStore from '@/store/modules/app'
-import useSettingsStore from '@/store/modules/settings'
-import usePermissionStore from '@/store/modules/permission'
+import Logo from "./Logo";
+import SidebarItem from "./SidebarItem";
+import variables from "@/assets/styles/variables.module.scss";
+import useAppStore from "@/store/modules/app";
+import useSettingsStore from "@/store/modules/settings";
+import usePermissionStore from "@/store/modules/permission";
 
 const route = useRoute();
-const appStore = useAppStore()
-const settingsStore = useSettingsStore()
-const permissionStore = usePermissionStore()
+const appStore = useAppStore();
+const settingsStore = useSettingsStore();
+const permissionStore = usePermissionStore();
 
 const sidebarRouters = computed(() => permissionStore.sidebarRouters);
 const showLogo = computed(() => settingsStore.sidebarLogo);
@@ -46,17 +42,21 @@ const isCollapse = computed(() => !appStore.sidebar.opened);
 // 获取菜单背景色
 const getMenuBackground = computed(() => {
   if (settingsStore.isDark) {
-    return 'var(--sidebar-bg)';
+    return "var(--sidebar-bg)";
   }
-  return sideTheme.value === 'theme-dark' ? variables.menuBg : variables.menuLightBg;
+  return sideTheme.value === "theme-dark"
+    ? variables.menuBg
+    : variables.menuLightBg;
 });
 
 // 获取菜单文字颜色
 const getMenuTextColor = computed(() => {
   if (settingsStore.isDark) {
-    return 'var(--sidebar-text)';
+    return "var(--sidebar-text)";
   }
-  return sideTheme.value === 'theme-dark' ? variables.menuText : variables.menuLightText;
+  return sideTheme.value === "theme-dark"
+    ? variables.menuText
+    : variables.menuLightText;
 });
 
 const activeMenu = computed(() => {
@@ -70,35 +70,16 @@ const activeMenu = computed(() => {
 
 <style lang="scss" scoped>
 .sidebar-container {
-  background-color: v-bind(getMenuBackground);
-  
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--el-menu-bg-color);
+
   .scrollbar-wrapper {
-    background-color: v-bind(getMenuBackground);
+    background-color: var(--el-menu-bg-color);
   }
 
-  .el-menu {
-    border: none;
-    height: 100%;
-    width: 100% !important;
-    
-    .el-menu-item, .el-sub-menu__title {
-      &:hover {
-        background-color: var(--menu-hover, rgba(0, 0, 0, 0.06)) !important;
-      }
-    }
-
-    .el-menu-item {
-      color: v-bind(getMenuTextColor);
-      
-      &.is-active {
-        color: var(--menu-active-text, #409eff);
-        background-color: var(--menu-hover, rgba(0, 0, 0, 0.06)) !important;
-      }
-    }
-
-    .el-sub-menu__title {
-      color: v-bind(getMenuTextColor);
-    }
+  :deep(.el-scrollbar__bar) {
+    z-index: 11;
   }
 }
 </style>

@@ -1,19 +1,18 @@
 #app {
-
   .main-container {
     min-height: 100%;
-    transition: margin-left .28s;
-    margin-left: $base-sidebar-width;
+    transition: margin-left 0.28s;
+    margin-left: 220px;
     position: relative;
   }
 
   .sidebarHide {
-    margin-left: 0!important;
+    margin-left: 0 !important;
   }
 
   .sidebar-container {
     transition: width 0.28s;
-    width: $base-sidebar-width !important;
+    width: 220px !important;
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -22,12 +21,13 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
-    -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
-    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    -webkit-box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
 
     // reset element-ui css
     .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
     }
 
     .scrollbar-wrapper {
@@ -63,19 +63,31 @@
     }
 
     .el-menu {
+      padding: 0 !important;
       border: none;
       height: 100%;
       width: 100% !important;
+
+      .el-menu-item,
+      .el-sub-menu__title,
+      .el-sub-menu .el-menu-item {
+        width: 100% !important;
+        margin: 0 !important;
+      }
     }
 
-    .el-menu-item, .menu-title {
+    .el-menu-item,
+    .menu-title {
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       white-space: nowrap !important;
     }
 
     .el-menu-item .el-menu-tooltip__trigger {
-      display: inline-block !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100%;
     }
 
     // menu hover
@@ -90,22 +102,26 @@
       color: $base-menu-color-active !important;
     }
 
-    & .nest-menu .el-sub-menu>.el-sub-menu__title,
+    & .nest-menu .el-sub-menu > .el-sub-menu__title,
     & .el-sub-menu .el-menu-item {
-      min-width: $base-sidebar-width !important;
-
       &:hover {
         background-color: rgba(0, 0, 0, 0.06) !important;
       }
     }
 
-    & .theme-dark .nest-menu .el-sub-menu>.el-sub-menu__title,
+    & .theme-dark .nest-menu .el-sub-menu > .el-sub-menu__title,
     & .theme-dark .el-sub-menu .el-menu-item {
       background-color: $base-sub-menu-background;
 
       &:hover {
         background-color: $base-sub-menu-hover !important;
       }
+    }
+
+    // 添加全局过渡动画
+    .el-menu-item,
+    .el-sub-menu__title {
+      transition: width 0.28s, padding-left 0.28s, padding-right 0.28s;
     }
   }
 
@@ -118,43 +134,93 @@
       margin-left: 54px;
     }
 
-    .sub-menu-title-noDropdown {
+    .submenu-title-noDropdown {
       padding: 0 !important;
       position: relative;
 
       .el-tooltip {
         padding: 0 !important;
-
-        .svg-icon {
-          margin-left: 20px;
-        }
       }
     }
 
     .el-sub-menu {
       overflow: hidden;
 
-      &>.el-sub-menu__title {
+      & > .el-sub-menu__title {
         padding: 0 !important;
+        justify-content: center;
 
-        .svg-icon {
-          margin-left: 20px;
+        // 确保图标显示
+        .svg-icon,
+        i {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 14px !important;
+          text-align: center;
+          font-size: 14px !important;
+          line-height: 52px;
         }
 
+        .el-sub-menu__icon-arrow {
+          display: none;
+        }
       }
     }
 
+    .el-menu-item,
+    .el-sub-menu__title {
+      transition: none !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 0 !important;
+
+      i,
+      .svg-icon {
+        transition: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 14px !important;
+        text-align: center;
+        font-size: 14px !important;
+        line-height: 52px;
+      }
+
+      span {
+        transition: none !important;
+      }
+    }
+
+    // 统一处理一级菜单和二级菜单的宽度
+    .el-menu-item,
+    .el-sub-menu__title,
+    .submenu-title-noDropdown {
+      width: 54px !important;
+      padding: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      .svg-icon,
+      i {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 14px !important;
+        text-align: center;
+        font-size: 14px !important;
+        line-height: 52px;
+      }
+    }
+
+    .el-menu {
+      padding: 0 !important;
+    }
+
     .el-menu--collapse {
+      padding: 0 !important;
       .el-sub-menu {
-        &>.el-sub-menu__title {
-          &>span {
-            height: 0;
-            width: 0;
-            overflow: hidden;
-            visibility: hidden;
-            display: inline-block;
-          }
-          &>i {
+        & > .el-sub-menu__title {
+          & > span {
             height: 0;
             width: 0;
             overflow: hidden;
@@ -163,11 +229,34 @@
           }
         }
       }
+    }
+
+    // 移除其他动画相关样式
+    .submenu-title-noDropdown,
+    .el-sub-menu {
+      & > .el-menu-item,
+      & > .el-sub-menu__title {
+        transition: none !important;
+      }
+    }
+
+    // 移除折叠状态的动画
+    .el-menu--collapse {
+      .el-menu-item,
+      .el-sub-menu__title {
+        transition: none !important;
+      }
+    }
+
+    // 移除 tooltip 的动画
+    .el-tooltip {
+      transition: none !important;
     }
   }
 
   .el-menu--collapse .el-menu .el-sub-menu {
-    min-width: $base-sidebar-width !important;
+    // 移除这个固定宽度限制
+    // min-width: 220px !important;
   }
 
   // mobile responsive
@@ -177,37 +266,43 @@
     }
 
     .sidebar-container {
-      transition: transform .28s;
-      width: $base-sidebar-width !important;
+      transition: transform 0.28s;
+      width: 220px !important;
     }
 
     &.hideSidebar {
       .sidebar-container {
         pointer-events: none;
         transition-duration: 0.3s;
-        transform: translate3d(-$base-sidebar-width, 0, 0);
+        transform: translate3d(-220px, 0, 0);
       }
     }
   }
 
   .withoutAnimation {
-
     .main-container,
     .sidebar-container {
       transition: none;
+    }
+
+    .el-menu-item,
+    .el-sub-menu__title,
+    i,
+    span {
+      transition: none !important;
     }
   }
 }
 
 // when menu collapsed
 .el-menu--vertical {
-  &>.el-menu {
+  & > .el-menu {
     .svg-icon {
       margin-right: 16px;
     }
   }
 
-  .nest-menu .el-sub-menu>.el-sub-menu__title,
+  .nest-menu .el-sub-menu > .el-sub-menu__title,
   .el-menu-item {
     &:hover {
       // you can use $sub-menuHover
@@ -216,7 +311,7 @@
   }
 
   // the scroll bar appears when the sub-menu is too long
-  >.el-menu--popup {
+  > .el-menu--popup {
     max-height: 100vh;
     overflow-y: auto;
 
@@ -232,5 +327,8 @@
       background: #99a9bf;
       border-radius: 20px;
     }
+
+    // 这里可以保留最小宽度，因为是弹出菜单
+    min-width: 220px;
   }
 }
