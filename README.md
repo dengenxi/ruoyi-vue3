@@ -74,7 +74,7 @@ yarn dev
     </tr>
     <tr>
         <td><img src="/public/image03.png"/></td>
-        <td><img src="/public/image04.png"/></td>
+        <td><img src="https://oscimg.oschina.net/oscnet/up-9f88719cdfca9af2e58b352a20e23d43b12.png"/></td>
     </tr>
     <tr>
         <td><img src="https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png"/></td>
